@@ -32,11 +32,17 @@ body {
 }
 
 // Dark Mode Support
-@include dark-mode {
+@media (prefers-color-scheme: dark) {
     :root {
         background-color: $color-bg-dark;
         color: $color-text-primary-dark;
     }
+}
+
+// Class-based dark mode (for manual toggle)
+html.dark {
+    background-color: $color-bg-dark;
+    color: $color-text-primary-dark;
 }
 
 // Selection Styling

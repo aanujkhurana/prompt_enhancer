@@ -1,5 +1,6 @@
 <template>
   <div class="app-wrapper">
+    <ThemeToggle />
     <main>
       <TheHero />
       <div class="container">

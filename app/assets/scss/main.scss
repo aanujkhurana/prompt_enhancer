@@ -180,9 +180,13 @@ $z-toast: 500;
 // MIXINS
 // =============================================================================
 
-// Dark Mode Mixin
+// Dark Mode Mixin (supports both class and media query)
 @mixin dark-mode {
   @media (prefers-color-scheme: dark) {
+    @content;
+  }
+
+  html.dark & {
     @content;
   }
 }
