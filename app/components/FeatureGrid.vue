@@ -1,4 +1,15 @@
 <template>
+  <svg width="0" height="0" style="position: absolute;">
+    <defs>
+      <linearGradient id="rainbow-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+        <stop offset="25%" style="stop-color:#8b5cf6;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#ec4899;stop-opacity:1" />
+        <stop offset="75%" style="stop-color:#f59e0b;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+  </svg>
   <section class="features">
     <div class="features__grid">
       <div class="feature-card">
@@ -62,39 +73,38 @@
 }
 
 .feature-card {
-  background: $color-bg-light;
-  border: 1px solid $color-border-light;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
   padding: $space-8;
   border-radius: $radius-2xl;
   text-align: center;
   transition: all $transition-base;
-  box-shadow: $shadow-sm;
+  backdrop-filter: blur(10px);
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: $shadow-lg;
-    border-color: $color-border-strong-light;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 
     .feature-card__icon {
-      transform: scale(1.1) rotate(5deg);
+      transform: scale(1.15) rotate(5deg);
       
       svg {
-        stroke: $accent-500;
+        stroke: url(#rainbow-gradient);
+        filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));
       }
     }
   }
 
   @include dark-mode {
-    background: $color-bg-secondary-dark;
-    border-color: $color-border-dark;
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.15);
 
     &:hover {
-      border-color: $color-border-strong-dark;
-      box-shadow: $shadow-dark-md;
-
-      .feature-card__icon svg {
-        stroke: $accent-400;
-      }
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
     }
   }
 
@@ -103,15 +113,16 @@
     height: 64px;
     margin: 0 auto $space-5;
     transition: all $transition-base;
+    position: relative;
     
     svg {
       width: 100%;
       height: 100%;
-      stroke: $accent-500;
-      transition: stroke $transition-base;
+      stroke: rgba(255, 255, 255, 0.8);
+      transition: all $transition-base;
 
       @include dark-mode {
-        stroke: $accent-400;
+        stroke: rgba(255, 255, 255, 0.7);
       }
     }
   }

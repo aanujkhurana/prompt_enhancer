@@ -66,29 +66,32 @@ const { toggleTheme, isDark } = useTheme()
   width: 48px;
   height: 48px;
   
-  background: $color-bg-light;
-  border: 1px solid $color-border-light;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: $radius-full;
   
   cursor: pointer;
   transition: all $transition-base;
-  
-  box-shadow: $shadow-md;
+  backdrop-filter: blur(10px);
   
   html.dark & {
-    background: $color-bg-secondary-dark;
-    border-color: $color-border-dark;
-    box-shadow: $shadow-dark-md;
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
   &:hover {
-    transform: scale(1.05);
-    box-shadow: $shadow-lg;
-    border-color: $accent-500;
+    transform: scale(1.1) rotate(10deg);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+    
+    .theme-toggle__icon {
+      filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.6));
+    }
     
     html.dark & {
-      border-color: $accent-400;
-      box-shadow: $shadow-dark-lg;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.45);
     }
   }
 
@@ -109,10 +112,11 @@ const { toggleTheme, isDark } = useTheme()
   &__icon {
     width: 100%;
     height: 100%;
-    color: $color-text-primary-light;
+    color: rgba(255, 255, 255, 0.9);
+    transition: all $transition-base;
     
     html.dark & {
-      color: $color-text-primary-dark;
+      color: rgba(255, 255, 255, 0.85);
     }
 
     &--sun {

@@ -83,28 +83,44 @@ function selectTemplate(text) {
     display: inline-flex;
     align-items: center;
     gap: $space-2;
-    background: $color-bg-light;
-    border: 1px solid $color-border-light;
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
     padding: $space-3 $space-5;
     border-radius: $radius-full;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
-    color: $color-text-secondary-light;
+    color: rgba(255, 255, 255, 0.85);
     cursor: pointer;
     transition: all $transition-base;
-    box-shadow: $shadow-sm;
+    backdrop-filter: blur(8px);
     user-select: none;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899, #f59e0b, #10b981);
+      opacity: 0;
+      transition: opacity $transition-base;
+      z-index: -1;
+    }
 
     &:hover {
-      border-color: $accent-500;
-      color: $accent-600;
-      background: rgba($accent-500, 0.05);
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: $shadow-md;
+      border-color: rgba(255, 255, 255, 0.5);
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+
+      &::before {
+        opacity: 0.15;
+      }
 
       .templates__icon {
-        transform: scale(1.1);
-        color: $accent-600;
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 4px rgba(99, 102, 241, 0.6));
       }
     }
 
@@ -113,18 +129,14 @@ function selectTemplate(text) {
     }
 
     @include dark-mode {
-      background: $color-bg-secondary-dark;
-      border-color: $color-border-dark;
-      color: $color-text-secondary-dark;
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.8);
 
       &:hover {
-        border-color: $accent-400;
-        color: $accent-400;
-        background: rgba($accent-400, 0.1);
-
-        .templates__icon {
-          color: $accent-400;
-        }
+        border-color: rgba(255, 255, 255, 0.45);
+        background: rgba(255, 255, 255, 0.08);
+        color: white;
       }
     }
   }
@@ -136,10 +148,12 @@ function selectTemplate(text) {
     width: 16px;
     height: 16px;
     transition: all $transition-base;
+    color: rgba(255, 255, 255, 0.9);
 
     :deep(svg) {
       width: 100%;
       height: 100%;
+      filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3));
     }
   }
 }

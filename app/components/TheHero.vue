@@ -1,31 +1,23 @@
 <template>
   <section class="hero">
-    <ClientOnly>
-      <div class="hero__background">
-        <div class="hero__gradient"></div>
-        <div class="hero__orb hero__orb--1"></div>
-        <div class="hero__orb hero__orb--2"></div>
-        <div class="hero__orb hero__orb--3"></div>
-      </div>
-    </ClientOnly>
+    <div class="hero__background">
+      <div class="hero__gradient"></div>
+      <div class="hero__orb hero__orb--1"></div>
+      <div class="hero__orb hero__orb--2"></div>
+      <div class="hero__orb hero__orb--3"></div>
+    </div>
     
     <div class="container container--narrow">
       <h1 class="hero__title">
-        <span class="hero__word" style="--word-index: 0">Turn</span>
-        <span class="hero__word" style="--word-index: 1">Vague</span>
-        <span class="hero__word" style="--word-index: 2">Ideas</span>
-        <span class="hero__word" style="--word-index: 3">into</span>
+        <span class="hero__text">Turn Vague Ideas into </span>
         <span class="hero__highlight">
-          <span class="hero__word" style="--word-index: 4">Perfect</span>
-          <span class="hero__word" style="--word-index: 5">Prompts</span>
+          <span class="hero__text hero__text--highlight">Perfect Prompts</span>
         </span>
       </h1>
       <p class="hero__subtitle">
-        <span class="hero__subtitle-line" style="--line-index: 0">
+        <span class="hero__subtitle-text">
           Instantly optimize your prompts for ChatGPT, Claude, and Gemini.
-        </span>
-        <br class="hero__break" />
-        <span class="hero__subtitle-line" style="--line-index: 1">
+          <br class="hero__break" />
           Better inputs, <span class="hero__emphasis">magical outputs</span>.
         </span>
       </p>
@@ -38,15 +30,14 @@
   padding: $space-20 0 $space-16;
   text-align: center;
   position: relative;
-  overflow: hidden;
 
   @include sm-up {
     padding: $space-24 0 $space-20;
   }
 
-  // Animated background
+  // Animated background - fixed and full-screen
   &__background {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -63,7 +54,9 @@
     bottom: -50%;
     background: radial-gradient(
       circle at 50% 0%,
-      rgba($accent-500, 0.08) 0%,
+      rgba(99, 102, 241, 0.06) 0%,
+      rgba(139, 92, 246, 0.05) 15%,
+      rgba(236, 72, 153, 0.04) 30%,
       transparent 50%
     );
     animation: gradientPulse 8s ease-in-out infinite;
@@ -73,34 +66,34 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(60px);
-    opacity: 0.3;
+    opacity: 0.25;
     
     &--1 {
       width: 300px;
       height: 300px;
-      background: linear-gradient(135deg, $accent-400, $accent-600);
+      background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
       top: -100px;
       left: 10%;
-      animation: float 20s ease-in-out infinite;
+      animation: float 20s ease-in-out infinite, rainbowRotate 15s linear infinite;
     }
     
     &--2 {
       width: 250px;
       height: 250px;
-      background: linear-gradient(135deg, #8b5cf6, $accent-500);
+      background: linear-gradient(135deg, #ec4899, #f59e0b, #10b981);
       top: 50px;
       right: 10%;
-      animation: float 15s ease-in-out infinite reverse;
+      animation: float 15s ease-in-out infinite reverse, rainbowRotate 18s linear infinite;
     }
     
     &--3 {
       width: 200px;
       height: 200px;
-      background: linear-gradient(135deg, $accent-300, $accent-500);
+      background: linear-gradient(135deg, #10b981, #06b6d4, #6366f1);
       bottom: -50px;
       left: 50%;
       transform: translateX(-50%);
-      animation: float 18s ease-in-out infinite;
+      animation: float 18s ease-in-out infinite, rainbowRotate 22s linear infinite;
     }
   }
 
@@ -129,46 +122,39 @@
     }
   }
 
-  &__word {
+  &__text {
     display: inline-block;
-    margin: 0 0.15em;
     opacity: 0;
-    animation: wordFadeIn 0.6s $ease-spring forwards;
-    animation-delay: calc(var(--word-index) * 0.1s);
+    animation: fadeIn 0.1s 0.5s forwards;
+    
+    &--highlight {
+      display: inline-block;
+      overflow: hidden;
+      border-right: 3px solid currentColor;
+      white-space: nowrap;
+      max-width: 0;
+      opacity: 1;
+      animation: typewriterLoop 4s steps(15) 2.7s infinite, blinkCursor 0.75s step-end infinite;
+    }
   }
 
   &__highlight {
     display: inline-block;
     position: relative;
     background: linear-gradient(
-      135deg,
+      90deg,
       #6366f1 0%,
-      #8b5cf6 25%,
-      #c084fc 50%,
-      #8b5cf6 75%,
+      #8b5cf6 20%,
+      #ec4899 40%,
+      #f59e0b 60%,
+      #10b981 80%,
       #6366f1 100%
     );
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: gradientShift 3s ease infinite;
-    
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.4) 50%,
-        transparent 100%
-      );
-      animation: shimmer 3s infinite;
-    }
+    animation: rainbowSlide 8s linear 4.5s infinite;
   }
 
   &__subtitle {
@@ -188,16 +174,15 @@
     }
   }
 
-  &__subtitle-line {
+  &__subtitle-text {
     display: inline-block;
     opacity: 0;
-    animation: wordFadeIn 0.8s $ease-spring forwards;
-    animation-delay: calc(0.6s + (var(--line-index) * 0.2s));
+    animation: fadeInUp 0.8s $ease-spring 4.5s forwards;
   }
 
   &__emphasis {
     font-weight: $font-weight-semibold;
-    background: linear-gradient(135deg, $accent-500, #8b5cf6);
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -213,25 +198,56 @@
 }
 
 // Animations
-@keyframes wordFadeIn {
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes typewriterLoop {
+  0%, 100% {
+    max-width: 0;
+  }
+  50%, 90% {
+    max-width: 100%;
+  }
+}
+
+@keyframes blinkCursor {
+  0%, 100% {
+    border-right-color: transparent;
+  }
+  50% {
+    border-right-color: currentColor;
+  }
+}
+
+@keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(20px);
-    filter: blur(10px);
+    transform: translateY(10px);
   }
   100% {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0);
   }
 }
 
-@keyframes gradientShift {
-  0%, 100% {
+@keyframes rainbowSlide {
+  0% {
     background-position: 0% 50%;
   }
-  50% {
-    background-position: 100% 50%;
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes rainbowRotate {
+  0% {
+    filter: blur(60px) hue-rotate(0deg);
+  }
+  100% {
+    filter: blur(60px) hue-rotate(360deg);
   }
 }
 

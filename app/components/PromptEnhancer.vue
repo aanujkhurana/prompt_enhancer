@@ -8,12 +8,13 @@
           placeholder="e.g., Write a blog post about coffee..."
           :disabled="loading"
           rows="6"
+          @keydown.enter.exact.prevent="enhance"
         ></textarea>
       </div>
       
       <div class="enhancer__actions">
         <button 
-          class="btn btn--primary btn--lg" 
+          class="enhancer__button" 
           @click="enhance" 
           :disabled="!input || loading"
         >
@@ -21,7 +22,14 @@
             <span class="enhancer__spinner"></span>
             Enhancing...
           </span>
-          <span v-else>Enhance Prompt ✨</span>
+          <span v-else class="enhancer__button-content">
+            <span>Enhance Prompt</span>
+            <kbd class="enhancer__kbd">
+              <svg class="enhancer__kbd-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </kbd>
+          </span>
         </button>
       </div>
     </div>
@@ -40,7 +48,7 @@
             </svg>
             Enhanced Prompt
           </div>
-          <button class="btn btn--ghost btn--sm" @click="copyToClipboard">
+          <button class="enhancer__copy-btn" @click="copyToClipboard">
             <svg v-if="!copied" class="enhancer__copy-icon" viewBox="0 0 20 20" fill="currentColor">
               <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/>
               <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"/>
@@ -169,6 +177,130 @@ function copyToClipboard() {
   &__actions {
     display: flex;
     justify-content: center;
+  }
+
+  &__button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-3;
+    padding: $space-4 $space-8;
+    border-radius: $radius-xl;
+    font-family: $font-primary;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    background: transparent;
+    color: $color-text-primary-light;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all $transition-base;
+    outline: none;
+    backdrop-filter: blur(10px);
+
+    @include dark-mode {
+      color: $color-text-primary-dark;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+      @include dark-mode {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  &__button-content {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 $space-2;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: $radius-md;
+    font-family: $font-primary;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+    transition: all $transition-base;
+
+    @include dark-mode {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  &__kbd-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  &__copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-2 $space-4;
+    border-radius: $radius-md;
+    font-family: $font-primary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    user-select: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    transition: all $transition-base;
+    outline: none;
+
+    @include dark-mode {
+      color: rgba(255, 255, 255, 0.6);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+
+      @include dark-mode {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.35);
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
   }
 
   &__spinner {
