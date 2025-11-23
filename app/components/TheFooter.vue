@@ -10,17 +10,23 @@
 
 <style lang="scss" scoped>
 .footer {
-  padding: 2rem 0;
+  padding: $space-12 0 $space-8;
   text-align: center;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid $color-border-light;
+  margin-top: auto;
 
   @include dark-mode {
-    border-top-color: #334155;
+    border-top-color: $color-border-dark;
   }
 
   &__text {
-    color: #94a3b8;
-    font-size: 0.875rem;
+    color: $color-text-tertiary-light;
+    font-size: $font-size-sm;
+    line-height: $line-height-normal;
+
+    @include dark-mode {
+      color: $color-text-tertiary-dark;
+    }
   }
 }
 </style>

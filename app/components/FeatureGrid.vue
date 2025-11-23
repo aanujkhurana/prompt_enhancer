@@ -22,54 +22,73 @@
 
 <style lang="scss" scoped>
 .features {
-  margin-bottom: 3rem;
+  margin-bottom: $space-20;
+  padding: $space-12 0;
 
   &__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: $space-6;
 
-    @media (min-width: 768px) {
+    @include md-up {
       grid-template-columns: repeat(3, 1fr);
+      gap: $space-8;
     }
   }
 }
 
 .feature-card {
-  background: #f8fafc;
-  padding: 2rem;
-  border-radius: 1rem;
+  background: $color-bg-light;
+  border: 1px solid $color-border-light;
+  padding: $space-8;
+  border-radius: $radius-2xl;
   text-align: center;
-  transition: transform 0.2s;
+  transition: all $transition-base;
+  box-shadow: $shadow-sm;
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+    border-color: $color-border-strong-light;
   }
 
   @include dark-mode {
-    background: #1e293b;
+    background: $color-bg-secondary-dark;
+    border-color: $color-border-dark;
+
+    &:hover {
+      border-color: $color-border-strong-dark;
+      box-shadow: $shadow-dark-md;
+    }
   }
 
   &__icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-size: $font-size-5xl;
+    margin-bottom: $space-5;
+    line-height: 1;
   }
 
   &__title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: #1e293b;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    letter-spacing: $letter-spacing-tight;
+    margin-bottom: $space-3;
+    color: $color-text-primary-light;
 
     @include dark-mode {
-      color: white;
+      color: $color-text-primary-dark;
     }
   }
 
   &__desc {
-    color: #64748b;
-    line-height: 1.6;
-    font-size: 0.95rem;
+    color: $color-text-secondary-light;
+    line-height: $line-height-relaxed;
+    font-size: $font-size-base;
+    margin: 0;
+
+    @include dark-mode {
+      color: $color-text-secondary-dark;
+    }
   }
 }
 </style>

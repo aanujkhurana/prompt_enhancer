@@ -1,19 +1,26 @@
 <template>
   <div class="enhancer">
-    <div class="enhancer__input-wrapper">
-      <textarea
-        v-model="input"
-        class="enhancer__textarea"
-        placeholder="e.g., Write a blog post about coffee..."
-        :disabled="loading"
-      ></textarea>
+    <div class="enhancer__card">
+      <div class="enhancer__input-wrapper">
+        <textarea
+          v-model="input"
+          class="enhancer__textarea"
+          placeholder="e.g., Write a blog post about coffee..."
+          :disabled="loading"
+          rows="6"
+        ></textarea>
+      </div>
+      
       <div class="enhancer__actions">
         <button 
-          class="btn btn--primary" 
+          class="btn btn--primary btn--lg" 
           @click="enhance" 
           :disabled="!input || loading"
         >
-          <span v-if="loading">Enhancing...</span>
+          <span v-if="loading">
+            <span class="enhancer__spinner"></span>
+            Enhancing...
+          </span>
           <span v-else>Enhance Prompt ✨</span>
         </button>
       </div>
@@ -26,8 +33,21 @@
     <transition name="slide-up">
       <div v-if="output" class="enhancer__output">
         <div class="enhancer__output-header">
-          <span class="enhancer__label">Enhanced Prompt</span>
-          <button class="enhancer__copy-btn" @click="copyToClipboard">
+          <div class="enhancer__output-title">
+            <svg class="enhancer__output-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+              <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+            </svg>
+            Enhanced Prompt
+          </div>
+          <button class="btn btn--ghost btn--sm" @click="copyToClipboard">
+            <svg v-if="!copied" class="enhancer__copy-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/>
+              <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"/>
+            </svg>
+            <svg v-else class="enhancer__copy-icon" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
             <span v-if="copied">Copied!</span>
             <span v-else>Copy</span>
           </button>
@@ -80,34 +100,68 @@ function copyToClipboard() {
 <style lang="scss" scoped>
 .enhancer {
   max-width: 800px;
-  margin: 0 auto 3rem;
+  margin: 0 auto $space-16;
+
+  &__card {
+    background: $color-bg-light;
+    border-radius: $radius-2xl;
+    border: 1px solid $color-border-light;
+    padding: $space-8;
+    box-shadow: $shadow-lg;
+    transition: all $transition-base;
+
+    @include dark-mode {
+      background: $color-bg-secondary-dark;
+      border-color: $color-border-dark;
+      box-shadow: $shadow-dark-lg;
+    }
+  }
+
+  &__input-wrapper {
+    margin-bottom: $space-6;
+  }
 
   &__textarea {
     width: 100%;
-    min-height: 160px;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    border: 2px solid #e2e8f0;
-    background: white;
-    font-size: 1.125rem;
+    min-height: 180px;
+    padding: $space-5;
+    border-radius: $radius-xl;
+    border: 2px solid $color-border-light;
+    background: $color-bg-secondary-light;
+    color: $color-text-primary-light;
+    font-size: $font-size-md;
+    font-family: $font-primary;
+    line-height: $line-height-relaxed;
     resize: vertical;
-    transition: all 0.2s ease;
+    transition: all $transition-base;
     outline: none;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+    &::placeholder {
+      color: $color-text-tertiary-light;
+    }
 
     &:focus {
-      border-color: #6366f1;
-      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+      @include focus-ring;
+      background: $color-bg-light;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     @include dark-mode {
-      background: #1e293b;
-      border-color: #334155;
-      color: white;
+      background: $color-bg-dark;
+      border-color: $color-border-dark;
+      color: $color-text-primary-dark;
+
+      &::placeholder {
+        color: $color-text-tertiary-dark;
+      }
 
       &:focus {
-        border-color: #818cf8;
+        background: $color-bg-secondary-dark;
+        border-color: $accent-400;
       }
     }
   }
@@ -117,24 +171,41 @@ function copyToClipboard() {
     justify-content: center;
   }
 
+  &__spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin-right: $space-2;
+  }
+
   &__error {
-    margin-top: 1rem;
-    color: #ef4444;
+    margin-top: $space-6;
+    padding: $space-4 $space-6;
+    background: rgba($color-error, 0.1);
+    color: $color-error;
+    border: 1px solid rgba($color-error, 0.3);
+    border-radius: $radius-lg;
     text-align: center;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
   }
 
   &__output {
-    margin-top: 3rem;
-    background: white;
-    border-radius: 1rem;
-    border: 1px solid #e2e8f0;
+    margin-top: $space-12;
+    background: $color-bg-light;
+    border-radius: $radius-2xl;
+    border: 1px solid $color-border-light;
     overflow: hidden;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: $shadow-xl;
 
     @include dark-mode {
-      background: #1e293b;
-      border-color: #334155;
+      background: $color-bg-secondary-dark;
+      border-color: $color-border-dark;
+      box-shadow: $shadow-dark-lg;
     }
   }
 
@@ -142,60 +213,73 @@ function copyToClipboard() {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem;
-    background: #f8fafc;
-    border-bottom: 1px solid #e2e8f0;
+    padding: $space-5 $space-6;
+    background: $color-bg-secondary-light;
+    border-bottom: 1px solid $color-border-light;
 
     @include dark-mode {
-      background: #0f172a;
-      border-color: #334155;
+      background: $color-bg-dark;
+      border-color: $color-border-dark;
     }
   }
 
-  &__label {
-    font-weight: 600;
-    color: #64748b;
-    font-size: 0.875rem;
+  &__output-title {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary-light;
+    font-size: $font-size-sm;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: $letter-spacing-wide;
+
+    @include dark-mode {
+      color: $color-text-primary-dark;
+    }
   }
 
-  &__copy-btn {
-    background: transparent;
-    border: none;
-    color: #6366f1;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 0.875rem;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    transition: background 0.2s;
+  &__output-icon {
+    width: 16px;
+    height: 16px;
+    color: $accent-500;
 
-    &:hover {
-      background: rgba(99, 102, 241, 0.1);
+    @include dark-mode {
+      color: $accent-400;
     }
+  }
+
+  &__copy-icon {
+    width: 16px;
+    height: 16px;
   }
 
   &__result {
-    padding: 1.5rem;
+    padding: $space-6;
     white-space: pre-wrap;
-    line-height: 1.7;
-    color: #334155;
+    line-height: $line-height-relaxed;
+    color: $color-text-primary-light;
+    font-size: $font-size-base;
 
     @include dark-mode {
-      color: #e2e8f0;
+      color: $color-text-secondary-dark;
     }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
 .slide-up-enter-active,
 .slide-up-leave-active {
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all $transition-smooth;
 }
 
 .slide-up-enter-from,
 .slide-up-leave-to {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(30px) scale(0.98);
 }
 </style>

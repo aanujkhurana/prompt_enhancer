@@ -35,46 +35,65 @@ function selectTemplate(text) {
 <style lang="scss" scoped>
 .templates {
   text-align: center;
-  margin-bottom: 5rem;
+  margin-bottom: $space-20;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 
   &__label {
-    color: #64748b;
-    font-size: 0.875rem;
-    margin-bottom: 1rem;
+    color: $color-text-secondary-light;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    margin-bottom: $space-5;
+
+    @include dark-mode {
+      color: $color-text-secondary-dark;
+    }
   }
 
   &__list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.75rem;
+    gap: $space-3;
   }
 
   &__btn {
-    background: white;
-    border: 1px solid #e2e8f0;
-    padding: 0.5rem 1rem;
-    border-radius: 9999px;
-    font-size: 0.875rem;
-    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    background: $color-bg-light;
+    border: 1px solid $color-border-light;
+    padding: $space-3 $space-5;
+    border-radius: $radius-full;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-text-secondary-light;
     cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all $transition-base;
+    box-shadow: $shadow-sm;
+    user-select: none;
 
     &:hover {
-      border-color: #6366f1;
-      color: #6366f1;
-      transform: translateY(-1px);
+      border-color: $accent-500;
+      color: $accent-600;
+      background: rgba($accent-500, 0.05);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: $shadow-md;
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.98);
     }
 
     @include dark-mode {
-      background: #1e293b;
-      border-color: #334155;
-      color: #94a3b8;
+      background: $color-bg-secondary-dark;
+      border-color: $color-border-dark;
+      color: $color-text-secondary-dark;
 
       &:hover {
-        border-color: #818cf8;
-        color: #818cf8;
+        border-color: $accent-400;
+        color: $accent-400;
+        background: rgba($accent-400, 0.1);
       }
     }
   }

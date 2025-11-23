@@ -21,10 +21,11 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  animation: fadeIn $transition-smooth $ease-spring;
 }
 
 main {
   flex: 1;
-  padding-bottom: 4rem;
+  padding-bottom: $space-16;
 }
 </style>
