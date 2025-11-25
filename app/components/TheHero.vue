@@ -1,6 +1,7 @@
 <template>
   <section class="hero">
     <div class="hero__background">
+      <div class="hero__pattern"></div>
       <div class="hero__gradient"></div>
       <div class="hero__orb hero__orb--1"></div>
       <div class="hero__orb hero__orb--2"></div>
@@ -46,6 +47,23 @@
     z-index: 0;
   }
 
+  &__pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.4;
+    
+    @include dark-mode {
+      opacity: 0.2;
+    }
+  }
+
   &__gradient {
     position: absolute;
     top: -50%;
@@ -54,10 +72,10 @@
     bottom: -50%;
     background: radial-gradient(
       circle at 50% 0%,
-      rgba(99, 102, 241, 0.06) 0%,
-      rgba(139, 92, 246, 0.05) 15%,
-      rgba(236, 72, 153, 0.04) 30%,
-      transparent 50%
+      rgba(99, 102, 241, 0.04) 0%,
+      rgba(139, 92, 246, 0.03) 20%,
+      rgba(236, 72, 153, 0.02) 40%,
+      transparent 60%
     );
     animation: gradientPulse 8s ease-in-out infinite;
   }
@@ -65,32 +83,32 @@
   &__orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(60px);
-    opacity: 0.25;
+    filter: blur(80px);
+    opacity: 0.15;
     
     &--1 {
-      width: 300px;
-      height: 300px;
+      width: 500px;
+      height: 500px;
       background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
-      top: -100px;
-      left: 10%;
+      top: -200px;
+      left: 5%;
       animation: float 20s ease-in-out infinite, rainbowRotate 15s linear infinite;
     }
     
     &--2 {
-      width: 250px;
-      height: 250px;
+      width: 450px;
+      height: 450px;
       background: linear-gradient(135deg, #ec4899, #f59e0b, #10b981);
-      top: 50px;
-      right: 10%;
+      top: 10%;
+      right: 5%;
       animation: float 15s ease-in-out infinite reverse, rainbowRotate 18s linear infinite;
     }
     
     &--3 {
-      width: 200px;
-      height: 200px;
+      width: 400px;
+      height: 400px;
       background: linear-gradient(135deg, #10b981, #06b6d4, #6366f1);
-      bottom: -50px;
+      bottom: -100px;
       left: 50%;
       transform: translateX(-50%);
       animation: float 18s ease-in-out infinite, rainbowRotate 22s linear infinite;

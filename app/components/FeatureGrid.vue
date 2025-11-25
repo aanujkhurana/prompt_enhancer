@@ -74,37 +74,39 @@
 
 .feature-card {
   background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   padding: $space-8;
   border-radius: $radius-2xl;
   text-align: center;
   transition: all $transition-base;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
 
   &:hover {
-    transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 
     .feature-card__icon {
-      transform: scale(1.15) rotate(5deg);
+      transform: scale(1.2);
       
       svg {
-        stroke: url(#rainbow-gradient);
-        filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));
+        stroke: white;
       }
     }
   }
 
+  &:active {
+    transform: translateY(0) scale(0.98);
+  }
+
   @include dark-mode {
     background: transparent;
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
 
     &:hover {
-      background: rgba(255, 255, 255, 0.03);
-      border-color: rgba(255, 255, 255, 0.35);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.45);
     }
   }
 
